@@ -1,14 +1,10 @@
 version: "2"
 
-volumes:
-    html: ${PWD}/web
-
-
 services:
     nginx:
         build: dockers/nginx
         volumes:
-            - html:/usr/share/nginx/html
+            - ${PWD}/web:/usr/share/nginx/html
         ports:
             - "80:80"
             - "443:443"
@@ -21,7 +17,7 @@ services:
     php-fpm:
         build: dockers/php-fpm
         volumes:
-            - html:/usr/share/nginx/html
+            - ${PWD}/web:/usr/share/nginx/html
         ports:
             - "2222:22"
         restart: always
@@ -49,4 +45,4 @@ services:
         ports:
             - "22:22"
         volumes:
-            - html:/usr/share/nginx/html
+            - ${PWD}/web:/usr/share/nginx/html
