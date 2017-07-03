@@ -4,7 +4,7 @@ services:
     nginx:
         build: dockers/nginx
         volumes_from:
-            - php-fpm
+            - ${PWD}/web:/usr/share/nginx/html
         ports:
             - "80:80"
             - "443:443"
@@ -16,8 +16,10 @@ services:
 
     php-fpm:
         build: dockers/php-fpm
-        volumes:
-            - ${PWD}/web:/usr/share/nginx/html
+        volumes_from:
+            - nginx
+        ports:
+            - "2222:22"
         restart: always
 
     mariadb:
@@ -31,10 +33,16 @@ services:
             - MYSQL_DATABASE=XE_DB
             - MYSQL_USER=XE_USER
             - MYSQL_PASSWORD=USER_PASSWORD
-
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         restart: always
 
     redis:
         image: redis
         restart: always
+
+    ssh:
+        build: dockers/ssh
+        ports:
+            - "22:22"
+        volumes_from:
+            - nginx
