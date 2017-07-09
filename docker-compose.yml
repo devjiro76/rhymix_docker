@@ -33,6 +33,7 @@ services:
             - MYSQL_DATABASE=XE_DB
             - MYSQL_USER=XE_USER
             - MYSQL_PASSWORD=USER_PASSWORD
+            - TZ=Asia/Seoul
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         restart: always
 
